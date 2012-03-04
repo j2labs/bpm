@@ -1,4 +1,4 @@
-# Brubeck Package Manager
+# Brubeck Project Manager
 
 Here are the commands that I think Brubeck should have. Some work has been done
 and some of that will be carried over.
