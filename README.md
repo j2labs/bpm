@@ -29,16 +29,14 @@ To start 4 Brubeck instances:
 
     $ bpm up 4
 
+Creating a remove environment might look like this:
+
+    $ bpm remote new_env <env_name> --requirements envs/brubeck.reqs
 
 ## Remote Environments
 
 [Kracekumar](http://twitter.com/kracetheking) suggests using gevent with pip
 for downloading packages in parallel.
-
-Perhaps that could look like this:
-
-    $ bpm remote new_env <env_name> --requirements envs/brubeck.reqs
-
     
 ## Mongrel2
 
