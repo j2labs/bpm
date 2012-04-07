@@ -29,16 +29,13 @@ To start 4 Brubeck instances:
 
     $ bpm up 4
 
-Creating a remove environment might look like this:
-
-    $ bpm remote new_env <env_name> --requirements envs/brubeck.reqs
-
-## Remote Environments
+I think this command should probably use procer to watch over the Python
+processes.
 
 [Kracekumar](http://twitter.com/kracetheking) suggests using gevent with pip
 for downloading packages in parallel.
     
 ## Mongrel2
 
-Mongrel2's existance will be somewhat hidden behind bpm. So will Brubeck's,
+Mongrel2's existence will be somewhat hidden behind bpm. So will Brubeck's,
 except for the simple fact of implementing our website in it.
