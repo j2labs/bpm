@@ -14,26 +14,37 @@ Create a new Brubeck environment:
 
     $ bpm new_env <env_name>
     
-In the directory will be `etc`, `log`, `static`, `run`, `templates` and a
-directory named after the environment for your Python code.
-
 To start a project: 
 
     $ bpm new_project <project_name>
     
-To start Brubeck:
+In that directory will be `etc`, `log`, `static`, `run`, `templates` and a
+directory named after the environment for your Python code.
+
+To start Brubeck, use the `up` command. I think this command should probably use
+procer to watch over the Python processes.
 
     $ bpm up
     
-To start 4 Brubeck instances:
+To start n Brubeck instances, pass a number to `up`:
 
     $ bpm up 4
 
-I think this command should probably use procer to watch over the Python
-processes.
+`cd` to the logs directory.
+
+    $ bpm cdlogs
+
+Follow the logs for Mongrel2.
+
+    $ bpm tailm2
+
+Follow the logs or Brubeck.
+
+    $ bpm tailbrubeck
 
 [Kracekumar](http://twitter.com/kracetheking) suggests using gevent with pip
 for downloading packages in parallel.
+
     
 ## Mongrel2
 
