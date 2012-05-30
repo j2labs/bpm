@@ -1,0 +1,40 @@
+All done!  The library requirements have been written out to a requirements.txt
+file, so you most likely want to install those with pip:
+
+    pip install -r requirements.txt
+
+A sample Mongrel2 configuration has been placed in conf/mongrel2.conf.  If
+you're curious to know the full details on how to use Mongrel2, check out the
+manual here: http://mongrel2.org/static/mongrel2-manual.html
+
+Mongrel2 internally uses a sqlite database for configuration, but it also
+includes a mechanism for turning a config file into a sqlite database.  You
+can generate a sqlite configuration database called conf/config.sqlite as
+follows:
+
+    m2sh load -config conf/mongrel2.conf -db conf/config.sqlite
+
+The supplied configuration will set you up with a localhost configuration.
+Provided you have a sqlite configuration database called conf/config.sqlite,
+you can start the Mongrel2 server as follows:
+
+    m2sh start -db conf/config.sqlite -host localhost
+
+It's a bit wordy, so we hope to simplify that in the future.
+
+With the sample configuration, Mongrel2 will use ZeroMQ to hold a socket open
+that a Brubeck application can connect to.  This is specified in the
+brubeck_handler block in the conf/mongrel2.conf file.  In this configuration,
+Mongrel2 will send messages to Brubeck via ipc://127.0.0.1:9999.  Our main.py
+file reflects this connection by configuring its inbound 0MQ socket with the
+same address, as seen in the "config" dictionary that is used to instantiate
+our app.  The second socket that can be seen, ipc://127.0.0.1:9998, operates in
+the other direction; Brubeck sends messages to Mongrel2 with this socket, which
+in turn, sends the information back to the user.
+
+With Mongrel2 running and waiting for messages, you can launch the Brubeck
+app by simply executing the main.py file:
+
+    ./main.py
+
+Now go build something cool ;)
