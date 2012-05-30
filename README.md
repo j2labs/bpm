@@ -10,16 +10,19 @@ I think Brubeck environments should basically be virtual environments. These
 things are handy for managing lots of flexibility in environments, in addition
 to isolating our needs from the system.
 
-Create a new Brubeck environment:
-
-    $ bpm new_env <env_name>
-    
 To start a project: 
 
-    $ bpm new_project <project_name>
+    $ bpm project create [-n project_name]
+
+Create a new Brubeck environment:
+
+    $ bpm env create 
     
-In that directory will be `etc`, `log`, `static`, `run`, `templates` and a
+In that directory will be `settings`, `log`, `static`, `run`, `templates` and a
 directory named after the environment for your Python code.
+
+
+## Future Commands
 
 To start Brubeck, use the `up` command. I think this command should probably use
 procer to watch over the Python processes.
@@ -42,11 +45,3 @@ Follow the logs or Brubeck.
 
     $ bpm tailbrubeck
 
-[Kracekumar](http://twitter.com/kracetheking) suggests using gevent with pip
-for downloading packages in parallel.
-
-    
-## Mongrel2
-
-Mongrel2's existence will be somewhat hidden behind bpm. So will Brubeck's,
-except for the simple fact of implementing our website in it.
