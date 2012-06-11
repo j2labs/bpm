@@ -58,5 +58,4 @@ setup(name='bpm',
       url='http://github.com/j2labs/bpm',
       packages=['bpm'],
       data_files=my_data_files,
-      scripts=['bin/bpm', 'bin/bpmrc'],
-      install_requires=['pip', 'virtualenv'])
+      scripts=['bin/bpm', 'bin/bpmrc'])
