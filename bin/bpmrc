@@ -1,0 +1,20 @@
+### The point of this file is to have a file local to the project in charge
+### of setting up the environment. It activates the virtualenv and then allows
+### a few commands / aliases to be set, according to user preference
+
+if [ ! -f "$PWD/virtualenv/bin/activate" ]; then
+    echo "ERROR: This project is not a Brubeck project. Please create one with";
+    echo "       the Brubeck Project Manager"
+    exit
+fi
+
+if [ $0 != "-bash" ]; then
+    echo "ERROR: You probably want to source this command like below."
+    echo ""
+    echo "    $ source /path/to/bpmrc"
+    echo ""
+fi
+
+export PATH=$PWD/bin:$PATH
+export PYTHONPATH=$PWD:$PYTHONPATH
+source $PWD/virtualenv/bin/activate

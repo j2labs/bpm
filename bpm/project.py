@@ -3,6 +3,8 @@ import shutil
 from itertools import chain
 import imp
 
+from bpm.text import dep_statement_bpm
+
 
 def _walk_up_until(root_path, sub_path):
     """Starts at `root_path` and basically loops through `cd ..` until it finds
@@ -25,9 +27,10 @@ def load_settings():
     settings file.
     """
     root_path = os.getcwd()
+    ### Load settings/base.py, but import as just settings
     path = _walk_up_until(root_path, 'settings/base.py')
     if path:
-        return imp.load_source('settings.base', path)
+        return imp.load_source('settings', path)
 
 
 def find_skel_dir(root_path):
@@ -42,6 +45,8 @@ def project_create(args):
     """Implements the `create` command. It essentially copies the contents of
     `bpm/settings/skel/` into a directory to bootstrap a project's design.
     """
+    response = raw_input(dep_statement_bpm)
+    
     ### Find path to skel dir
     bpm_path = os.path.dirname(os.path.abspath(__file__))
     skel_path = find_skel_dir(bpm_path)

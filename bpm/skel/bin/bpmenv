@@ -1,0 +1,7 @@
+### The point of this file is to have a file local to the project in charge
+### of setting up the environment. It activates the virtualenv and then allows
+### a few commands / aliases to be set, according to user preference
+
+### Source the rc file provided by bpm
+BPMRC=$(which bpmrc)
+source $BPMRC

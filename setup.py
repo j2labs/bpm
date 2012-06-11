@@ -3,8 +3,9 @@
 
 import os
 import fnmatch
-from distutils.core import setup
 
+from distutils.core import setup
+#from setuptools import setup
 
 skel_paths =  [
     'bpm/skel',
@@ -57,4 +58,5 @@ setup(name='bpm',
       url='http://github.com/j2labs/bpm',
       packages=['bpm'],
       data_files=my_data_files,
-      scripts=['bin/bpm'])
+      scripts=['bin/bpm', 'bin/bpmrc'],
+      install_requires=['pip', 'virtualenv'])

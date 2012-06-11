@@ -5,6 +5,10 @@ import subprocess
 import uuid
 
 
+def install_mongrel2():
+    pass
+
+
 def find_mongrel2_conf(project_path):
     """Given a Brubeck project directory, attempts to locate a Mongrel2
     configuration file. Returns None if no mongrel2.conf file is found."""
