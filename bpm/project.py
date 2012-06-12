@@ -45,7 +45,11 @@ def project_create(args):
     """Implements the `create` command. It essentially copies the contents of
     `bpm/settings/skel/` into a directory to bootstrap a project's design.
     """
-    response = raw_input(dep_statement_bpm)
+    try:
+        import pip
+        import virtualenv
+    except:
+        response = raw_input(dep_statement_bpm)
     
     ### Find path to skel dir
     bpm_path = os.path.dirname(os.path.abspath(__file__))

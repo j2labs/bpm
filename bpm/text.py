@@ -43,7 +43,7 @@ Choose one or more (jinja2 mako tornado mustache none):
 dep_statement_bpm = """
 # BPM dependencies
 
-BPM needs pip, virtualenv and the ability to compile Python stuff.
+BPM needs pip and virtualenv
 
     Ubuntu: sudo apt-get install python-pip python-virtualenv
     Mac:    sudo easy_install pip && sudo pip install virtualenv
