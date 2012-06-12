@@ -1,45 +1,42 @@
 import sys
-
-from bpm.mongrel2 import (get_mongrel2_status, mongrel2_reload, mongrel2_load,
-                          mongrel2_start, mongrel2_stop, mongrel2_log)
-
-
-def system_run(args):
-    import settings
-    if settings.APP_DIR not in sys.path:
-        sys.path.insert(0, settings.APP_DIR)
-
-    # signal.signal(signal.SIGINT, lambda signal, frame: True)
-    mod = __import__(args.app_name)
-    mod.app.run()
+import tempfile
+import subprocess
 
 
-def system_status(args):
-    import settings
-    status, msg = get_mongrel2_status(settings.MONGREL2_DB, args.host)
-    print msg
+from bpm.text import (dep_statement_m2,
+                      installer_zeromq, installer_mongrel2, installer_pyzmq,
+                      installer_gevent_zeromq)
 
 
-def system_load(args):
-    import settings
-    mongrel2_load(settings.MONGREL2_DB, args.conf_file)
+def run_as_script(settings, script):
+    """Takes a settings directory, so it can locate the src directory, and then
+    writes `script` to a tmp file, which it then executes.
+    """
+    src_dir = settings.dir_virtualenv + '/src'
+    
+    fd, tempname = tempfile.mkstemp()
+    f = open(tempname, 'w')
+    f.write('mkdir -p %s\n' % (src_dir))
+    f.write('cd %s\n' % (src_dir))
+    f.write(script)
+    f.close()
+
+    cmd = ['sh', tempname]
+    return subprocess.check_call(cmd)
 
 
-def system_start(args):
-    import settings
-    mongrel2_start(settings.MONGREL2_DB, args.host, not args.foreground)
+###
+### Source-based Installers
+###
 
-
-def system_stop(args):
-    import settings
-    mongrel2_stop(settings.MONGREL2_DB, args.host)
-
-
-def system_log(args):
-    import settings
-    mongrel2_log(settings.MONGREL2_DB, args.host)
-
-
-def system_reload(args):
-    import settings
-    mongrel2_reload(settings.MONGREL2_DB, args.host)
+def install_mongrel2(settings):
+    """High-level installer for Mongrel2. Includes zeromq, pyzmq and
+    gevent_zeromq.
+    """
+    response = raw_input(dep_statement_m2)
+    
+    run_as_script(settings, installer_zeromq)
+    run_as_script(settings, installer_mongrel2)
+    run_as_script(settings, installer_pyzmq)
+    run_as_script(settings, installer_gevent_zeromq)
+    
