@@ -16,10 +16,15 @@ To start a project:
 
 Create a new Brubeck environment:
 
+    $ cd <project_name>
     $ bpm env create 
     
-In that directory will be `settings`, `log`, `static`, `run`, `templates` and a
-directory named after the environment for your Python code.
+In that directory will be `settings`, `static`, `templates` and a directory
+named after your project. 
+
+Two hidden directories are also used. One is `.virtualenv` where the python
+environment is stored. The other is `.var`, where we find the `logs`, `sock`
+and `run`. 
 
 
 ## Future Commands
@@ -33,15 +38,5 @@ To start n Brubeck instances, pass a number to `up`:
 
     $ bpm up 4
 
-`cd` to the logs directory.
-
-    $ bpm cdlogs
-
-Follow the logs for Mongrel2.
-
-    $ bpm tailm2
-
-Follow the logs or Brubeck.
-
-    $ bpm tailbrubeck
-
+This command will start any relevant web servers and probably also sit on top
+of supervisord or procer to keep the processes up until you tell them to stop.
