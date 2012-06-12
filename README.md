@@ -10,11 +10,16 @@ I think Brubeck environments should basically be virtual environments. These
 things are handy for managing lots of flexibility in environments, in addition
 to isolating our needs from the system.
 
-To start a project: 
+
+### Starting a project
 
     $ bpm project create [-n project_name]
 
-Create a new Brubeck environment:
+This will create a Project directory called `brubeck_project`, unless you
+provide a different name.
+
+
+### Create an environment
 
     $ cd <project_name>
     $ bpm env create 
