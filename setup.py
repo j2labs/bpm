@@ -5,14 +5,15 @@ import os
 import fnmatch
 
 from distutils.core import setup
-#from setuptools import setup
 
 skel_paths =  [
     'bpm/skel',
+    'bpm/skel/.var',
+    'bpm/skel/.var/log',
+    'bpm/skel/.var/run',
+    'bpm/skel/.var/sock',
     'bpm/skel/bin',
-    'bpm/skel/log',
     'bpm/skel/project',
-    'bpm/skel/run',
     'bpm/skel/settings',
     'bpm/skel/static',
     'bpm/skel/templates',
