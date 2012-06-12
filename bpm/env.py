@@ -106,7 +106,6 @@ def env_create(args):
     import virtualenv
 
     settings = load_settings()
-    print 'SETTINGS:', settings.dir_project
     
     ### Create virtualenv
     virtualenv.create_environment(settings.dir_virtualenv)
@@ -124,8 +123,6 @@ def env_create(args):
     py_reqs = py_reqs + template_engines
 
     ### pip install requirements
-    print 'reqs:', py_reqs
-    
     pip = os.path.join(settings.dir_virtualenv, 'bin/pip')
     cmd = [pip, 'install', '-I']
     return subprocess.check_call(cmd + py_reqs)
