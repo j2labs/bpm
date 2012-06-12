@@ -64,3 +64,8 @@ def project_create(args):
 
     ### Copy skel over
     shutil.copytree(skel_path, project_path)
+
+    ### Rename project dir in skel after project
+    before = project_path + '/project'
+    after = project_path + '/' + args.name
+    shutil.move(before, after)
