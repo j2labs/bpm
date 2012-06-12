@@ -14,7 +14,7 @@ dir_project = os.path.abspath(os.path.dirname(cwd))  ### cwd/../
 ###
 
 dir_bin = os.path.join(dir_project, 'bin/')
-dir_virtualenv = os.path.join(dir_project, 'virtualenv/')
+dir_virtualenv = os.path.join(dir_project, '.virtualenv/')
 dir_settings = os.path.join(dir_project, 'settings/')
 dir_logs = os.path.join(dir_project, 'log/')
 dir_static = os.path.join(dir_project, 'static/')
