@@ -31,6 +31,14 @@ Two hidden directories are also used. One is `.virtualenv` where the python
 environment is stored. The other is `.var`, where we find the `logs`, `sock`
 and `run`. 
 
+### Activating an environment
+
+    $ cd <project_name>
+    $ source bin/bpmenv
+
+At this point it is just virtualenv. Turn it off by typing `deactivate`. By 
+default the virtualenv is installed in `project_name/.virtualenv`.
+
 
 ## Future Commands
 
