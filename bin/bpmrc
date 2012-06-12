@@ -23,4 +23,4 @@ fi
 
 export PATH=$PWD/bin:$PATH
 export PYTHONPATH=$PWD:$PYTHONPATH
-source $PWD/virtualenv/bin/activate
+source $ACTIVATE_PATH
