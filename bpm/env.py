@@ -7,9 +7,8 @@ import tempfile
 
 
 from bpm.project import load_settings
-from bpm.text import (q_webserver, q_concurrency, q_template_engines,
-                      dep_statement_m2)
-from bpm.system import run_as_script, install_mongrel2
+from bpm.servers import install_mongrel2
+from bpm.text import (q_webserver, q_concurrency, q_template_engines)
 
 
 ###

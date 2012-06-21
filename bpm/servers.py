@@ -4,9 +4,28 @@ import sqlite3
 import subprocess
 import uuid
 
+from bpm.system import run_as_script
+from bpm.text import (dep_statement_m2,
+                      installer_zeromq, installer_mongrel2, installer_pyzmq,
+                      installer_gevent_zeromq)
 
-def install_mongrel2():
-    pass
+
+
+
+###
+### Mongrel2
+###
+
+def install_mongrel2(settings):
+    """High-level installer for Mongrel2. Includes zeromq, pyzmq and
+    gevent_zeromq.
+    """
+    response = raw_input(dep_statement_m2)
+    
+    run_as_script(settings, installer_zeromq)
+    run_as_script(settings, installer_mongrel2)
+    run_as_script(settings, installer_pyzmq)
+    run_as_script(settings, installer_gevent_zeromq)
 
 
 def find_mongrel2_conf(project_path):
