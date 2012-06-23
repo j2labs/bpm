@@ -6,8 +6,8 @@ import subprocess
 import tempfile
 
 
-from bpm.project import load_settings
 from bpm.servers import install_mongrel2
+from bpm.project import load_settings
 from bpm.text import (q_webserver, q_concurrency, q_template_engines)
 
 
@@ -100,7 +100,6 @@ def ask_template_engines(settings):
     return choice
     
 
-
 def env_create(args):
     import virtualenv
 
@@ -112,6 +111,8 @@ def env_create(args):
 
     ### Ask about preferences
     web_server = ask_webserver(settings)
+    if web_server == ENV_M2:
+        py_reqs.append('pyzmq')
         
     concurrency = ask_concurrency(settings)
     py_reqs.append(concurrency)
