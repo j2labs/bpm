@@ -23,6 +23,7 @@ Choices:
 Choose one (gevent eventlet):
 """
 
+
 q_template_engines = """
 # Templating
 
@@ -50,6 +51,7 @@ BPM needs pip and virtualenv
 
 Press enter when finished.
 """
+
 
 dep_statement_m2 = """
 # Mongrel2 dependencies
@@ -103,4 +105,69 @@ cd gevent-zeromq
 git checkout v0.2.2
 ../../bin/python ./setup.py install 
 cd ..
+"""
+
+
+###
+### Mongrel2
+###
+
+### A mongrel2 handler config some variables for formatting the string:
+###   `project_name`: This is simply a prefix
+###   `send_spec`  : ZeroMQ socket path to receive Mongrel2 requests
+###   `send_ident` : Unique identifier for Brubeck side of request socket
+###   `recv_spec`  : ZeroMQ socket path to send response messages
+###   `recv_ident` : Unique identifier for Brubeck side of response socket
+
+config_mongrel2_handler = """
+%(project_name)_handler = Handler(
+    send_spec='%(send_spec)s',
+    send_ident='%(send_ident)s',
+    recv_spec='%(recv_spec)s'
+    recv_ident='%(recv_ident)s'
+)
+
+%(project_name)_host = Host(
+    name="%(host)s",
+    routes={
+        '/robots.txt': static_dir,
+        '/favicon.ico': static_dir,
+        '/static/': static_dir,
+        '/': %(project_name)_handler
+    }
+)
+"""
+
+### A mongrel2 server config also requires some variables:
+###   `default_host`: If multiple hosts are used, this is the default
+###   `port`:         Web server port
+###   `host_list`:    Comma-separated list of hosts served by Mongrel2
+
+config_mongrel2_server = """
+static_dir = Dir(
+    base='static/',
+    index_file='index.html',
+    default_ctype='text/plain'
+)
+
+main = Server(
+    uuid="267ab73c-0b58-4621-87a4-0d140ce0f96a",
+    chroot="./",
+    access_log="/.var/log/m2.access.log",
+    error_log="/.var/log/m2.error.log",
+    pid_file="/.var/run/mongrel2.pid",
+    default_host="%(default_host)",
+    name="brubeck",
+    port=%(port)s,
+    hosts=[%(host_list)]
+)
+"""
+
+### A mongrel2 instance might host multiple servers
+config_mongrel2_instance = """
+settings = {
+    "zeromq.threads": 1
+}
+
+servers = [main]
 """
