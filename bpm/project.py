@@ -4,42 +4,42 @@ from itertools import chain
 import imp
 
 from bpm.text import dep_statement_bpm
+from bpm.system import walk_up_until, import_dir
 
 
-def _walk_up_until(root_path, sub_path):
-    """Starts at `root_path` and basically loops through `cd ..` until it finds
-    a directory that contains `sub_path`, or it reaches root.
+###
+### Project Organization
+###
 
-    It returns the directory that had `sub_path` in it on success and returns
-    None if nothing is found.
-    """
-    cur_dir = root_path
-    while cur_dir != '/':
-        potential_path = os.path.join(cur_dir, sub_path)
-        if os.path.exists(potential_path):
-            return potential_path
-        cur_dir = os.path.dirname(cur_dir)
-    return None
-
-
-def load_settings():
+def find_settings():
     """This function attempts to discover the full path to a Brubeck project's
     settings file.
     """
     root_path = os.getcwd()
-    ### Load settings/base.py, but import as just settings
-    path = _walk_up_until(root_path, 'settings/base.py')
+    path = walk_up_until(root_path, 'settings/')
     if path:
-        return imp.load_source('settings', path)
+        return path
 
+def load_settings():
+    """Simple function that finds the settings file and returns a loaded python
+    module.
+    """
+    settings_path = find_settings()
+    settings = import_dir(settings_path)
+    return settings
+
+
+###
+### Project Manipulation Functions
+###
 
 def find_skel_dir(root_path):
     """Walks up from root_path, looking for a directory that matches the
     expected bpm skeleton directory path.
     """
     root_path = os.path.dirname(os.path.abspath(__file__))
-    return _walk_up_until(root_path, 'share/bpm/skel')
-        
+    return walk_up_until(root_path, 'share/bpm/skel')
+
 
 def project_create(args):
     """Implements the `create` command. It essentially copies the contents of
