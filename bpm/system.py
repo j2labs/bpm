@@ -55,15 +55,10 @@ def import_file(full_path_to_module):
 
     In the meantime, I must credit this Stack Overflow: http://bit.ly/PPf9y0
     """
-    try:
-        module_dir, module_file = os.path.split(full_path_to_module)
-        module_name, module_ext = os.path.splitext(module_file)
-        save_cwd = os.getcwd()
-        os.chdir(module_dir)
-        module_obj = __import__(module_name)
-        module_obj.__file__ = full_path_to_module
-        globals()[module_name] = module_obj
-        os.chdir(save_cwd)
-    except:
-        raise ImportError
-
+    module_dir, module_file = os.path.split(full_path_to_module)
+    module_name, module_ext = os.path.splitext(module_file)
+    sys.path.insert(0, module_dir)
+    module_obj = __import__(module_name)
+    module_obj.__file__ = full_path_to_module
+    sys.path.remove(module_dir)
+    return module_obj
