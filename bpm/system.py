@@ -37,28 +37,32 @@ def walk_up_until(root_path, sub_path):
     return None
 
 
-def import_dir(full_path_to_module):
-    ### Chop off trailing '/' if present
-    if full_path_to_module[-1] == os.sep:
-        full_path_to_module = full_path_to_module[0:-1]
-    module_dir, module_name = os.path.split(full_path_to_module)
-    sys.path.insert(0, module_dir)
-    module_obj = __import__(module_name)
-    module_obj.__file__ = full_path_to_module
-    sys.path.remove(module_dir)
-    return module_obj
-
-
-def import_file(full_path_to_module):
+def _import_module(module_dir, module_name, full_path_to_module):
     """I don't like doing this, but I don't know of a better way. If you are
     reading this code and have a solution, please send one.
 
     In the meantime, I must credit this Stack Overflow: http://bit.ly/PPf9y0
     """
-    module_dir, module_file = os.path.split(full_path_to_module)
-    module_name, module_ext = os.path.splitext(module_file)
     sys.path.insert(0, module_dir)
     module_obj = __import__(module_name)
     module_obj.__file__ = full_path_to_module
     sys.path.remove(module_dir)
     return module_obj
+
+
+def import_dir(full_path_to_module):
+    """Takes a full path to a directory and imports it as a module.
+    """
+    ### Chop off trailing '/' if present
+    if full_path_to_module[-1] == os.sep:
+        full_path_to_module = full_path_to_module[0:-1]
+    module_dir, module_name = os.path.split(full_path_to_module)
+    return _import_module(module_dir, module_name, full_path_to_module)
+
+
+def import_file(full_path_to_module):
+    """Takes a full path to a python file and imports it as a module.
+    """
+    module_dir, module_file = os.path.split(full_path_to_module)
+    module_name, module_ext = os.path.splitext(module_file)
+    return _import_module(module_dir, module_name, full_path_to_module)
