@@ -10,8 +10,6 @@ from bpm.text import (dep_statement_m2,
                       installer_gevent_zeromq)
 
 
-
-
 ###
 ### Mongrel2
 ###
@@ -26,44 +24,6 @@ def install_mongrel2(settings):
     run_as_script(settings, installer_mongrel2)
     run_as_script(settings, installer_pyzmq)
     run_as_script(settings, installer_gevent_zeromq)
-
-
-def find_mongrel2_conf(project_path):
-    """Given a Brubeck project directory, attempts to locate a Mongrel2
-    configuration file. Returns None if no mongrel2.conf file is found."""
-
-    for root, dirs, files in os.walk(project_path):
-        if 'mongrel2.conf' in files:
-            return os.path.join(root, 'mongrel2.conf')
-
-
-def find_mongrel2_db(project_path, create=False):
-    """Given a Brubeck project directory, performs a breadth-first search for a
-    sqlite database whose schema appears to match that of a Mongrel2
-    configuration file."""
-
-    dbs = []
-    for root, dirs, files in os.walk(project_path):
-        dbs.extend([os.path.join(root, f)
-                    for f in fnmatch.filter(files, '*.sqlite')])
-
-    if not dbs and create:
-        conf_file = find_mongrel2_conf(project_path)
-        if conf_file:
-            return generate_mongrel2_db(conf_file)
-        else:
-            return None
-
-    query = "select name from sqlite_master where type = 'table';"
-    expected_tables = set((u'server', u'proxy', u'mimetype', u'statistic',
-                           u'setting', u'route', u'log', u'host', u'directory',
-                           u'handler'))
-
-    for db in dbs:
-        with sqlite3.Connection(db) as con:
-            tables = set(row[0] for row in con.execute(query))
-        if tables == expected_tables:
-            return db
 
 
 def generate_mongrel2_db(conf_file_path, destination=None):
