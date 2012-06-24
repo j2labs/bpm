@@ -113,37 +113,30 @@ cd ..
 ###
 
 ### A mongrel2 handler config some variables for formatting the string:
-###   `project_name`: This is simply a prefix
-###   `send_spec`  : ZeroMQ socket path to receive Mongrel2 requests
-###   `send_ident` : Unique identifier for Brubeck side of request socket
-###   `recv_spec`  : ZeroMQ socket path to send response messages
-###   `recv_ident` : Unique identifier for Brubeck side of response socket
+###   `send_spec`   : ZeroMQ socket path to receive Mongrel2 requests
+###   `send_ident`  : Unique identifier for Brubeck side of request socket
+###   `recv_spec`   : ZeroMQ socket path to send response messages
+###   `recv_ident`  : Unique identifier for Brubeck side of response socket
+###   `port`:         Web server port
 
-config_mongrel2_handler = """
-%(project_name)_handler = Handler(
+config_mongrel2 = """
+brubeck_handler = Handler(
     send_spec='%(send_spec)s',
     send_ident='%(send_ident)s',
     recv_spec='%(recv_spec)s'
     recv_ident='%(recv_ident)s'
 )
 
-%(project_name)_host = Host(
-    name="%(host)s",
+brubeck_host = Host(
+    name="localhost",
     routes={
         '/robots.txt': static_dir,
         '/favicon.ico': static_dir,
         '/static/': static_dir,
-        '/': %(project_name)_handler
+        '/': brubeck_handler
     }
 )
-"""
 
-### A mongrel2 server config also requires some variables:
-###   `default_host`: If multiple hosts are used, this is the default
-###   `port`:         Web server port
-###   `host_list`:    Comma-separated list of hosts served by Mongrel2
-
-config_mongrel2_server = """
 static_dir = Dir(
     base='static/',
     index_file='index.html',
@@ -151,7 +144,7 @@ static_dir = Dir(
 )
 
 main = Server(
-    uuid="267ab73c-0b58-4621-87a4-0d140ce0f96a",
+    uuid="80b32390-63cd-481a-b9ed-3a4b05f027a0",
     chroot="./",
     access_log="/.var/log/m2.access.log",
     error_log="/.var/log/m2.error.log",
@@ -159,12 +152,9 @@ main = Server(
     default_host="%(default_host)",
     name="brubeck",
     port=%(port)s,
-    hosts=[%(host_list)]
+    hosts=[localhost]
 )
-"""
 
-### A mongrel2 instance might host multiple servers
-config_mongrel2_instance = """
 settings = {
     "zeromq.threads": 1
 }
