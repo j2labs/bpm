@@ -5,12 +5,12 @@ from settings import constants
 
 ### Foundational Settings
 cwd = os.path.dirname(__file__)
-dir_project = os.path.abspath(os.path.dirname(cwd))  ### cwd/../
 log_level = logging.DEBUG
 cookie_secret = 'OMGSOOOOOSECRET'
 
 
 ### Directory Arrangement
+dir_project = os.path.abspath(os.path.dirname(cwd))  ### cwd/../
 dir_bin = os.path.join(dir_project, 'bin/')
 dir_settings = os.path.join(dir_project, 'settings/')
 dir_static = os.path.join(dir_project, 'static/')
@@ -22,6 +22,7 @@ dir_sock = os.path.join(dir_project, '.var/sock/')
 
 
 ### Web Server
-web_server = constants.MONGREL2
-web_host = 'localhost'
+#web_server = constants.MONGREL2  # choose between MONGREL2 and WSGI
+web_server = constants.WSGI
 web_port = 6767
+web_host = 'localhost'
