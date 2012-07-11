@@ -28,36 +28,25 @@ m2sh_parser.add_argument('-s', '--sudo', default=False)
 
 
 ###
-### Project Subparser
+### Create Subparser
 ###
 
 ### Imports
 from bpm.project import project_create
-
-### bpm project ...
-project_parser = bpm_subparsers.add_parser('project')
-project_subparsers = project_parser.add_subparsers()
-
-### bpm project create <project_name>
-project_parser_create = project_subparsers.add_parser('create')
-project_parser_create.set_defaults(fn=project_create)
-project_parser_create.add_argument('-n', '--name', default='brubeck_project/')
-
-
-###
-### Env Subparser
-###
-
-### Imports
 from bpm.env import env_create
 
-### bpm env ...
-env_parser = bpm_subparsers.add_parser('env')
-env_subparsers = env_parser.add_subparsers()
+### bpm create ...
+create_parser = bpm_subparsers.add_parser('create')
+create_subparsers = create_parser.add_subparsers()
 
-### bpm env create [-r|--requirements=<file>]
-env_parser_create = env_subparsers.add_parser('create')
-env_parser_create.set_defaults(fn=env_create)
-env_parser_create.add_argument('-f', '--file', default=None)
+### bpm create project [-n|--name=<project_name>]
+create_project = create_subparsers.add_parser('project')
+create_project.set_defaults(fn=project_create)
+create_project.add_argument('-n', '--name', default='brubeck_project/')
+
+### bpm create env [-f|--file=<file>]
+create_env = create_subparsers.add_parser('env')
+create_env.set_defaults(fn=env_create)
+create_env.add_argument('-f', '--file', default=None)
 
 
