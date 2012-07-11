@@ -41,6 +41,17 @@ def find_skel_dir(root_path):
     return walk_up_until(root_path, 'share/bpm/skel')
 
 
+def _rename_project(project_path, new_name):
+    """Rename project dir in skel after project
+    """
+    ### Rename directory
+    before = project_path + '/project'
+    after = project_path + '/' + new_name
+    shutil.move(before, after)
+
+    ### Replace occurrences 
+
+
 def project_create(args):
     """Implements the `create` command. It essentially copies the contents of
     `bpm/settings/skel/` into a directory to bootstrap a project's design.
@@ -70,6 +81,4 @@ def project_create(args):
     shutil.copytree(skel_path, project_path)
 
     ### Rename project dir in skel after project
-    before = project_path + '/project'
-    after = project_path + '/' + args.name
-    shutil.move(before, after)
+    _rename_project(project_path, args.name)
