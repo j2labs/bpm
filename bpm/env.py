@@ -2,12 +2,10 @@ import os
 import sys
 import shutil
 from itertools import chain
-import subprocess
-import tempfile
 
 
 from bpm.servers import install_mongrel2
-from bpm.project import load_settings
+from bpm.project import load_settings, install_with_pip
 from bpm.text import (q_webserver, q_concurrency, q_template_engines)
 
 
@@ -122,8 +120,7 @@ def env_create(args):
     template_engines = ask_template_engines(settings)
     py_reqs = py_reqs + template_engines
 
+
     ### pip install requirements
-    pip = os.path.join(settings.dir_virtualenv, 'bin/pip')
-    cmd = [pip, 'install', '-I']
-    return subprocess.check_call(cmd + py_reqs)
+    response = install_with_pip(py_reqs)
 

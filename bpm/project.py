@@ -1,7 +1,9 @@
 import os
 import shutil
-from itertools import chain
 import imp
+import subprocess
+from itertools import chain
+
 
 from bpm.text import dep_statement_bpm
 from bpm.system import walk_up_until, import_dir
@@ -49,7 +51,17 @@ def _rename_project(project_path, new_name):
     after = project_path + '/' + new_name
     shutil.move(before, after)
 
-    ### Replace occurrences 
+    ### Replace occurrences
+
+    
+def install_with_pip(py_reqs):
+    """Simple function for installing python packages with the virtualenv's
+    pip.
+    """
+    settings = load_settings()
+    pip = os.path.join(settings.dir_virtualenv, 'bin/pip')
+    cmd = [pip, 'install', '-I']
+    return subprocess.check_call(cmd + py_reqs)    
 
 
 def project_create(args):
