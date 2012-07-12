@@ -13,12 +13,14 @@ if [ ! -f "$ACTIVATE_PATH" ]; then
     echo ""
     echo "    $ bpm env create"
     echo ""
+    return -1
 
 elif [ "$0" != "-bash" ]; then
     echo "ERROR: You probably want to source this command like below."
     echo ""
     echo "    $ source /path/to/bpmrc"
     echo ""
+    return -2
 
 else
     export PATH=$PWD/bin:$PATH
