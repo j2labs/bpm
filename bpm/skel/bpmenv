@@ -2,6 +2,14 @@
 ### of setting up the environment. It activates the virtualenv and then allows
 ### a few commands / aliases to be set, according to user preference
 
+### Grab PS1
+ORIG_PS1=$PS1
+
 ### Source the rc file provided by bpm
 BPMRC=$(which bpmrc)
 source $BPMRC
+
+### Word
+if [ $? == 0 ]; then
+    export PS1="(weeee)$ORIG_PS1"
+fi
