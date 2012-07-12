@@ -1,7 +1,6 @@
 import os
 import shutil
 import imp
-import subprocess
 from itertools import chain
 
 
@@ -54,16 +53,6 @@ def _rename_project(project_path, new_name):
     ### Replace occurrences
 
     
-def install_with_pip(py_reqs):
-    """Simple function for installing python packages with the virtualenv's
-    pip.
-    """
-    settings = load_settings()
-    pip = os.path.join(settings.dir_virtualenv, 'bin/pip')
-    cmd = [pip, 'install', '-I']
-    return subprocess.check_call(cmd + py_reqs)    
-
-
 def project_create(args):
     """Implements the `create` command. It essentially copies the contents of
     `bpm/settings/skel/` into a directory to bootstrap a project's design.

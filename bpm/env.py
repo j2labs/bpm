@@ -1,11 +1,12 @@
 import os
 import sys
 import shutil
+import subprocess
 from itertools import chain
 
 
 from bpm.servers import install_mongrel2
-from bpm.project import load_settings, install_with_pip
+from bpm.project import load_settings
 from bpm.text import (q_webserver, q_concurrency, q_template_engines)
 
 
@@ -25,7 +26,7 @@ ENV_MUSTACHE = 'mustache'
 
 
 ###
-### Python Environment functions
+### Question Handling
 ###
 
 def _ask_a_question(question, choices, accumulate=False, allow_none=False):
@@ -95,6 +96,20 @@ def ask_template_engines(settings):
                               accumulate=True, allow_none=True)
     return choice
     
+
+###
+### Environment Functions
+###
+
+def install_with_pip(py_reqs):
+    """Simple function for installing python packages with the virtualenv's
+    pip.
+    """
+    settings = load_settings()
+    pip = os.path.join(settings.dir_virtualenv, 'bin/pip')
+    cmd = [pip, 'install', '-I']
+    return subprocess.check_call(cmd + py_reqs)
+
 
 def env_create(args):
     import virtualenv
