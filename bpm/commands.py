@@ -40,13 +40,13 @@ create_parser = bpm_subparsers.add_parser('create')
 create_subparsers = create_parser.add_subparsers()
 
 ### bpm create project [-n|--name=<project_name>]
-create_project = create_subparsers.add_parser('project')
-create_project.set_defaults(fn=project_create)
-create_project.add_argument('-n', '--name', default='brubeck_project/')
+create_project_parser = create_subparsers.add_parser('project')
+create_project_parser.set_defaults(fn=project_create)
+create_project_parser.add_argument('-n', '--name', default='brubeck_project/')
 
 ### bpm create env [-f|--file=<file>]
-create_env = create_subparsers.add_parser('env')
-create_env.set_defaults(fn=env_create)
-create_env.add_argument('-f', '--file', default=None)
+create_env_parser = create_subparsers.add_parser('env')
+create_env_parser.set_defaults(fn=env_create)
+create_env_parser.add_argument('-f', '--file', default=None)
 
 
