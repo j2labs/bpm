@@ -78,8 +78,6 @@ def ask_webserver(settings):
     ### Default to Mongrel2
     choices = (ENV_M2, ENV_WSGI)
     choice = _ask_a_question(q_webserver, choices)
-    if choice == ENV_M2:
-        install_mongrel2(settings)
     return choice
 
 
@@ -120,6 +118,9 @@ def env_create(args):
     template_engines = ask_template_engines(settings)
     py_reqs = py_reqs + template_engines
 
+    ### Install web server requirements
+    if web_server == ENV_M2:
+        install_mongrel2(settings)
 
     ### pip install requirements
     response = install_with_pip(py_reqs)
