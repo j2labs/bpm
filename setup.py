@@ -12,7 +12,6 @@ skel_paths =  [
     'bpm/skel/.var/log',
     'bpm/skel/.var/run',
     'bpm/skel/.var/sock',
-    'bpm/skel/bin',
     'bpm/skel/project',
     'bpm/skel/settings',
     'bpm/skel/static',
