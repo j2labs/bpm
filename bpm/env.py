@@ -111,6 +111,16 @@ def install_with_pip(py_reqs):
     return subprocess.check_call(cmd + py_reqs)
 
 
+def render_project(project_name):
+    settings = load_settings()
+    
+    context = {
+        '{{BPM_PROJECT_NAME}}': project_name,
+    }
+
+    find_and_render(settings.dir_project, context)
+
+
 def env_create(args):
     import virtualenv
 

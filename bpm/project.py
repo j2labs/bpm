@@ -5,7 +5,7 @@ from itertools import chain
 
 
 from bpm.text import dep_statement_bpm
-from bpm.system import walk_up_until, import_dir
+from bpm.system import walk_up_until, import_dir, render_directory
 
 
 ###
@@ -42,7 +42,7 @@ def find_skel_dir(root_path):
     return walk_up_until(root_path, 'share/bpm/skel')
 
 
-def _rename_project(project_path, new_name):
+def _apply_project(project_path, new_name):
     """Rename project dir in skel after project
     """
     ### Rename directory
@@ -51,6 +51,11 @@ def _rename_project(project_path, new_name):
     shutil.move(before, after)
 
     ### Replace occurrences
+    project_context = {
+        '{{BPM_PROJECT_NAME}}': new_name,
+    }
+
+    render_directory(project_path, project_context)
 
     
 def project_create(args):
@@ -82,4 +87,4 @@ def project_create(args):
     shutil.copytree(skel_path, project_path)
 
     ### Rename project dir in skel after project
-    _rename_project(project_path, args.name)
+    _apply_project(project_path, args.name)

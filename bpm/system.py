@@ -2,7 +2,12 @@ import os
 import sys
 import tempfile
 import subprocess
+import re
 
+
+###
+### System Interaction
+###
 
 def run_as_script(settings, script):
     """Takes a settings directory, so it can locate the src directory, and then
@@ -36,6 +41,55 @@ def walk_up_until(root_path, sub_path):
         cur_dir = os.path.dirname(cur_dir)
     return None
 
+
+###
+### Simple Template Rendering
+###
+
+def find_template_files(dir, context_keys):
+    """This function is a generator that searches every file in a directory,
+    looking for evidence that template tags are being used. Each file is
+    essentially grepped for each of the context keys.
+
+    If a match is found, the files name and it's contents are returned. The
+    assumption is that the receiving function will handle the replacement and
+    write the new data to `filename`.
+    """
+    for parent, dnames, fnames in os.walk(dir):
+        for fname in fnames:
+            filename = os.path.join(parent, fname)
+            if os.path.isfile(filename):
+                with open(filename) as f:
+                    text = f.read()
+                    matched_keys = filter(lambda keyword: keyword in text,
+                                          context_keys)
+                    if len(matched_keys) > 0:
+                        yield (filename, text)
+
+
+def render_directory(dir, context):
+    """This function renders a context on a directory.
+    """
+    ### Get the list of known keys
+    context_keys = context.keys()
+    
+    for filename, text in find_template_files(dir, context_keys):
+        render_and_write(filename, context, text)
+        
+
+def render_and_write(filename, context, text):
+    """Opens a file and renders it according to the contents of `context`.
+    """
+    for key,value in context.items():
+        items = text.split(key)
+        text = value.join(items)
+    with open(filename, 'w') as f:
+        f.write(text)
+            
+
+###
+### Flexible Module Importing
+###
 
 def _import_module(module_dir, module_name, full_path_to_module):
     """I don't like doing this, but I don't know of a better way. If you are

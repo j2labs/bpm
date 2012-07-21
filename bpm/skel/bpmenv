@@ -11,5 +11,5 @@ source $BPMRC
 
 ### Word
 if [ $? == 0 ]; then
-    export PS1="(weeee)$ORIG_PS1"
+    export PS1="({{BPM_PROJECT_NAME}})$ORIG_PS1"
 fi
