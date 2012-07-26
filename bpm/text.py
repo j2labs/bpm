@@ -81,9 +81,11 @@ cd ..
 
 
 installer_mongrel2 = """
-wget http://mongrel2.org/static/downloads/mongrel2-1.7.5.tar.bz2
-tar jxf mongrel2-1.7.5.tar.bz2
-cd mongrel2-1.7.5/
+wget https://github.com/zedshaw/mongrel2/tarball/v1.8.0
+mv v1.8.0 mongrel2-1.8.0.tar.bz2
+tar jxf mongrel2-1.8.0.tar.bz2
+OUTDIR=$(tar tzf mongrel2-1.8.0.tar.bz2 | sed -e 's@/.*@@' | uniq)
+cd $OUTDIR
 env OPTFLAGS="-I$PWD/../../include" OPTLIBS="-L$PWD/../../lib" LD_RUN_PATH=$PWD/../../lib make
 env OPTFLAGS="-I$PWD/../../include" OPTLIBS="-L$PWD/../../lib" LD_RUN_PATH=$PWD/../../lib PREFIX=$PWD/../.. make install
 cd ..
