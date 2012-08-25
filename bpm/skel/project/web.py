@@ -5,7 +5,7 @@ from brubeck.request_handling import Brubeck
 from brubeck.connections import Mongrel2Connection
 
 from settings import init_db_conn, init_msg_conn, log_level, cookie_secret
-from {{BPM_PROJECT_NAME}}.handlers import TakeFiveHandler
+from {{BPM_PROJECT_NAME}}.handlers import LandingHandler
 
 
 ### Instantiate connections
@@ -15,7 +15,7 @@ msg_conn = init_msg_conn()
 
 ### Routes
 handler_tuples = [
-    (r'^/', TakeFiveHandler),
+    (r'^/', LandingHandler),
 ]
 
 
